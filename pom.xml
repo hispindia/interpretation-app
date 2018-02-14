@@ -9,7 +9,7 @@
   <version>2.27-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Interpretations</name>
-  <description>DHIS 2 interpretations app</description>
+  <description>DHIS 2 interpretations app State</description>
   <url>https://github.com/dhis2/interpretation-app</url>
   
   <organization>
@@ -26,12 +26,15 @@
 
   <distributionManagement>
     <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        <id>shimla-nexus</id>
+        <name>Shimla nexus repo</name>
+        <url>http://hospdev.hispindia.org/nexus/content/repositories/org.hispindia.dhis2/</url>
+        <uniqueVersion>false</uniqueVersion>
     </snapshotRepository>
     <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        <id>shimla-nexus</id>
+        <name>Shimla nexus repo</name>
+        <url>http://hospdev.hispindia.org/nexus/content/repositories/org.hispindia.dhis2/</url>
     </repository>
   </distributionManagement>
   

@@ -4,6 +4,18 @@ import { Avatar } from 'material-ui';
 
 import actions from './actions/Comment.action';
 
+function escapeHtml(text) {
+    var map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+
+    return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+}
+
 const PostComment = React.createClass({
     propTypes: {
         currentUser: React.PropTypes.object,
@@ -17,15 +29,20 @@ const PostComment = React.createClass({
         };
     },
 
+
+
     _addComment() {
-        if (this.state.text !== '') {
-            actions.addComment(this.props.interpretationId, this.state.text)
-                        .subscribe(() => {
-                            this.props.postCommentSuccess();
-                            this.setState({ text: '' });
-                        });
+
+        if (escapeHtml(this.state.text) !== '') {
+            actions.addComment(this.props.interpretationId, escapeHtml(this.state.text))
+                .subscribe(() => {
+                    this.props.postCommentSuccess();
+                    this.setState({ text: '' });
+                });
         }
     },
+
+
 
     _onChange(e) {
         this.setState({ text: e.target.value });
@@ -43,8 +60,8 @@ const PostComment = React.createClass({
 
         return (
 
-			<div className="postComment greyBackground" id={postComentTagId} >
-				<table>
+            <div className="postComment greyBackground" id={postComentTagId} >
+                <table>
                     <tbody>
                         <tr>
                             <td>
@@ -65,9 +82,9 @@ const PostComment = React.createClass({
                             </td>
                         </tr>
                     </tbody>
-				</table>
-			</div>
-		);
+                </table>
+            </div>
+        );
     },
 
 });
