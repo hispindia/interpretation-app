@@ -23,7 +23,8 @@
   "author": "James Chang",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "jquery": "^2.2.3"
+    "jquery": "^2.2.3",
+    "dompurify": "^1.0.10"
   },
   "devDependencies": {
     "babel-core": "^6.7.2",

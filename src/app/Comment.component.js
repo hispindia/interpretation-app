@@ -3,9 +3,10 @@ import React from 'react';
 import { IntlProvider, FormattedRelative } from 'react-intl';
 import { Avatar } from 'material-ui';
 import { otherUtils } from './utils';
-
+import createDOMPurify from 'dompurify';// add for UPHMIS CROSS-SCRIPTING Security Issue
 import actions from './actions/Comment.action';
 
+const domPurify = createDOMPurify(window); // add for UPHMIS CROSS-SCRIPTING Security Issue
 const Comment = React.createClass({
     propTypes: {
         data: React.PropTypes.object,
@@ -33,9 +34,9 @@ const Comment = React.createClass({
     },
 
     _displayContent() {
-        const showContent = otherUtils.parseStringToHTML(this.state.showContent);
-        const hideContent = otherUtils.parseStringToHTML(this.state.hideContent);
-
+        const showContent = otherUtils.parseStringToHTML(domPurify.sanitize(this.state.showContent)); // add for UPHMIS CROSS-SCRIPTING Security Issue
+        const hideContent = otherUtils.parseStringToHTML(domPurify.sanitize(this.state.hideContent)); // add for UPHMIS CROSS-SCRIPTING Security Issue
+        
         const divShowContent = `showContent_${this.props.data.id}`;
         const divHideContent = `hideContent_${this.props.data.id}`;
 
@@ -94,7 +95,7 @@ const Comment = React.createClass({
     },
 
     _editCommentText() {
-        const text = this.state.text;
+        const text = domPurify.sanitize(this.state.text);  // add for UPHMIS CROSS-SCRIPTING Security Issue
         actions.editComment(this.props.interpretationId, this.state.data.id, text)
 			.subscribe(() => {
     this.setState(this._setComments(this.state.text, this.state.text), function () {

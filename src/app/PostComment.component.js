@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { Avatar } from 'material-ui';
-
+import createDOMPurify from 'dompurify'; // add for UPHMIS CROSS-SCRIPTING Security Issue
 import actions from './actions/Comment.action';
 
+const domPurify = createDOMPurify(window); // add for UPHMIS CROSS-SCRIPTING Security Issue
 const PostComment = React.createClass({
     propTypes: {
         currentUser: React.PropTypes.object,
@@ -19,6 +20,7 @@ const PostComment = React.createClass({
 
     _addComment() {
         if (this.state.text !== '') {
+            this.state.text = domPurify.sanitize(this.state.text); // add for UPHMIS CROSS-SCRIPTING Security Issue
             actions.addComment(this.props.interpretationId, this.state.text)
                         .subscribe(() => {
                             this.props.postCommentSuccess();
